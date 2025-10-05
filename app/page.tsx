@@ -18,13 +18,13 @@ const Home = () => {
     const sections = gsap.utils.toArray<HTMLElement>(".section");
 
     // Snap scroll to sections
-    // ScrollTrigger.create({
-    //   snap: {
-    //     snapTo: 1 / (sections.length - 1), // equally divide scroll into sections
-    //     duration: 1.5, // smooth snap
-    //     ease: "power1.inOut",
-    //   },
-    // });
+    ScrollTrigger.create({
+      snap: {
+        snapTo: 1 / (sections.length - 1), // equally divide scroll into sections
+        duration: 1.5, // smooth snap
+        ease: "power1.inOut",
+      },
+    });
 
     if (!sectionRef.current) return;
 
@@ -58,7 +58,7 @@ const Home = () => {
     <main className="relative overflow-hidden" ref={sectionRef}>
       <PageOne />
       <PageTwo />
-      <PageThree />
+      {/* <PageThree /> */}
 
       {bubbles.map((_, i) => {
         const left = Math.random() * 90;

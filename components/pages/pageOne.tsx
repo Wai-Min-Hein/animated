@@ -122,7 +122,6 @@ const PageOne = () => {
         ">"
       );
 
-      
     },
     { scope: sectionRef }
   );
@@ -164,7 +163,7 @@ const PageOne = () => {
                 // className={`${isCenter?'':'hidden'}`}
                 className={`absolute ${
                   isCenter
-                    ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    ? "center-image top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     : ""
                 } ${isCenter ? "" : ""}`}
               >
