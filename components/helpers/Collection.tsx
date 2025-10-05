@@ -3,8 +3,8 @@ import React from 'react'
 
 const Collection = () => {
   return (
-        <div className="absolute -bottom-16 -right-4 w-62 h-54 z-[2000]">
-          <div className="relative w-full h-full">
+        <div className="absolute -bottom-16 -right-4  z-[2000]">
+          <div className="relative w-62 h-54">
             <Image
               fill
               src="/collection.svg"

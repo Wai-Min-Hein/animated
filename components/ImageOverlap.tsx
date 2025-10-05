@@ -4,7 +4,7 @@ import React from "react";
 import AnimatedImage from "./helpers/AnimatedImage";
 
 
-const offset = (value: number, range: number = 60) =>
+export const offset = (value: number, range: number = 60) =>
   value + Math.floor(Math.random() * range - range / 2);
 
 const ImageOverlap = () => {
