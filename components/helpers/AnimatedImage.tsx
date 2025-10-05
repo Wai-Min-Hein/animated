@@ -206,7 +206,7 @@ const AnimatedImage: React.FC<AnimatedImageProps> = ({
   return (
     <div
       ref={bounceRef}
-      className={`absolute ${isCenter ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" : ""} ${isCenter ? "" : ""}`}
+      className={`absolute ${isCenter ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[99999]" : ""} ${isCenter ? "" : ""}`}
 
       style={{
         // top: `${top}px`,

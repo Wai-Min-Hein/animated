@@ -64,8 +64,6 @@ const PageOne = () => {
     ],
   ];
 
-
-
   const leftPositions = [-250, 0, 250, 500, 900];
 
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -81,12 +79,6 @@ const PageOne = () => {
       const section = sectionRef.current;
       if (!section) return;
 
-    
-
-      // Phase II: Scroll-triggered exit
-      // const targetsForExit = [...sideImageRefs.current].reverse();
-      // const targetsForExit = [...sideImageRefs.current];
-
       // Phase II: Scroll-triggered exit
       const targetsForExit = sideImageRefs.current.filter(
         (el) => el !== centerImageRef.current
@@ -95,22 +87,18 @@ const PageOne = () => {
       const tl_scroll = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top",
+          start: "top top+=100vh",
           end: "bottom top",
           pin: true,
           scrub: 1,
-          // markers: true,
         },
       });
 
       tl_scroll.to(targetsForExit, {
-        x: "100vw",
+        x: "150vw",
         y: "80vh",
-        // scale: 0.1,
-        // opacity: 0,
-        //   rotation: 30,
-        stagger: { amount: 0.8, from: "end" },
-        duration: 1.5,
+        stagger: { amount: 0.6, from: "end" },// animate one after another
+        duration: 1,
         ease: "power2.in",
       });
 
@@ -118,15 +106,23 @@ const PageOne = () => {
       tl_scroll.to(
         centerImageRef.current,
         {
-          rotation: -45,
-          scale: .4,
-          y:400,
-          // opacity: 0,
-          duration: 1.5,
+          rotation: -90,
+          scale: 0.3,
+
+          y: "+=100vh",
+          duration: .5,
           ease: "power3.inOut",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1, // smooth follow scroll
+          },
         },
         ">"
       );
+
+      
     },
     { scope: sectionRef }
   );
@@ -134,7 +130,7 @@ const PageOne = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative w-screen h-screen overflow-hidden "
+      className="relative w-screen h-screen section snap-start"
     >
       <Image
         width={368}
@@ -144,29 +140,7 @@ const PageOne = () => {
         className="absolute top-4 left-4 z-[99999]"
       />
       <h1 className="absolute top-20 left-4 text-white font-bold">Home</h1>
-
-      {/* <div className="w-full h-full absolute top-0 overflow-hidden ">
-        {rows.map((images, rowIndex) =>
-          images.map((src, colIndex) => (
-            <div
-              className=""
-              ref={(el) => {
-                // Always store in sideImageRefs array (avoid duplicates)
-                if (el && !sideImageRefs.current.includes(el))
-                  sideImageRefs.current.push(el);
-              }}
-              key={`${rowIndex}-${colIndex}`}
-            >
-              <AnimatedImage
-                top={offset(rowTops[rowIndex])}
-                left={offset(leftPositions[colIndex])}
-                src={src}
-              />
-            </div>
-          ))
-        )}
-      </div> */}
-      <div className="w-full h-full absolute top-0 overflow-visible">
+      <div className="w-full h-full absolute top-0 ">
         {rows.map((images, rowIndex) =>
           images.map((src, colIndex) => {
             // Make the center image the specific one
@@ -177,7 +151,8 @@ const PageOne = () => {
                 ref={(el) => {
                   if (!el) return;
                   if (isCenter) centerImageRef.current = el;
-                  if (!sideImageRefs.current.includes(el)) sideImageRefs.current.push(el);
+                  if (!sideImageRefs.current.includes(el))
+                    sideImageRefs.current.push(el);
                 }}
                 style={{
                   top: isCenter ? "50%" : offset(rowTops[rowIndex]),
@@ -187,15 +162,13 @@ const PageOne = () => {
                   willChange: "transform",
                 }}
                 // className={`${isCenter?'':'hidden'}`}
-                className={`absolute ${isCenter ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" : ""} ${isCenter ? "" : ""}`}
-  
+                className={`absolute ${
+                  isCenter
+                    ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    : ""
+                } ${isCenter ? "" : ""}`}
               >
-                <AnimatedImage
-                isCenter={isCenter}
-                  src={src}
-                  top={0}
-                  left={0}
-                />
+                <AnimatedImage isCenter={isCenter} src={src} top={0} left={0} />
               </div>
             );
           })

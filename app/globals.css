@@ -120,13 +120,19 @@
   body {
     @apply bg-background text-foreground;
   }
+  html {
+  scroll-behavior: smooth;
+}
+
 
   
 }
 
 /* Custom Scrollbar Styles */
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
  display: none;
-} */
-
+}
+.scrollbar{
+  display: none;
+}
 
