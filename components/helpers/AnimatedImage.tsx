@@ -175,6 +175,7 @@ interface AnimatedImageProps {
   left: number;
   zIndex?: number;
   src: string;
+  isCenter?: boolean;
 }
 
 const AnimatedImage: React.FC<AnimatedImageProps> = ({
@@ -182,6 +183,7 @@ const AnimatedImage: React.FC<AnimatedImageProps> = ({
   left,
   zIndex = 1000,
   src,
+  isCenter=false
 }) => {
   const imgWidth = 800;
   const imgHeight = 900;
@@ -204,10 +206,11 @@ const AnimatedImage: React.FC<AnimatedImageProps> = ({
   return (
     <div
       ref={bounceRef}
-      className="absolute"
+      className={`absolute ${isCenter ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" : ""} ${isCenter ? "" : ""}`}
+
       style={{
-        top: `${top}px`,
-        left: `${left}px`,
+        // top: `${top}px`,
+        // left: `${left}px`,
         width: `${imgWidth}px`,
         height: `${imgHeight}px`,
         zIndex,
