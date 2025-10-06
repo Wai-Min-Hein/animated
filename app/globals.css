@@ -129,10 +129,17 @@
 }
 
 /* Custom Scrollbar Styles */
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
  display: none;
 }
 .scrollbar{
   display: none;
-} */
+}
 
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  box-sizing: border-box;
+}

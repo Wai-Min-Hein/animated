@@ -79,6 +79,9 @@ const PageOne = () => {
       const section = sectionRef.current;
       if (!section) return;
 
+      // const section2 = document.querySelector("#section-two");
+      // const section3 = document.querySelector("#section-three");
+
       // Phase II: Scroll-triggered exit
       const targetsForExit = sideImageRefs.current.filter(
         (el) => el !== centerImageRef.current
@@ -87,40 +90,86 @@ const PageOne = () => {
       const tl_scroll = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top+=100vh",
+          start: "top top",
           end: "bottom top",
-          pin: true,
+          // pin: true,
           scrub: 1,
         },
       });
 
       tl_scroll.to(targetsForExit, {
-        x: "150vw",
-        y: "80vh",
-        stagger: { amount: 0.6, from: "end" },// animate one after another
+        x: "200vw",
+        y: "60vh",
+        stagger: { amount: 0.3, from: "end" }, // animate one after another
         duration: 1,
         ease: "power2.in",
       });
 
-      // Center image exit
-      tl_scroll.to(
-        centerImageRef.current,
-        {
-          rotation: -90,
-          scale: 0.3,
+      // const tl = gsap.timeline({
+      //   scrollTrigger: {
+      //     trigger: "#section-one", // start from section one
+      //     start: "top top",
+      //     end: "bottom bottom", // scroll across all sections
+      //     scrub: 1,
+      //   },
+      // });
 
-          y: "+=100vh",
-          duration: .5,
-          ease: "power3.inOut",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1, // smooth follow scroll
-          },
-        },
-        ">"
-      );
+      // // Section 1 → Section 2
+      // tl.to(centerImageRef.current, {
+      //   y: "+=100vh",
+      //   x: "50%",
+      //   scale: 0.3,
+      //   rotation: -90,
+      // });
+
+      // // Section 2 → Section 3
+      // tl.to(centerImageRef.current, {
+      //   y: "+=100vh",
+      //   x: "-30%",
+      //   scale: 0.3,
+      //   rotation: 0,
+      // });
+
+
+      // 1️⃣ Reset transform after Section One so GSAP can take full control
+  ScrollTrigger.create({
+    trigger: "#section-one",
+    start: "top top",
+    end: "bottom top",
+    onLeave: () => {
+      if (centerImageRef.current) {
+        // remove initial Tailwind translate
+        centerImageRef.current.style.transform = "translate(0, 0)";
+      }
+    },
+  });
+
+  // 2️⃣ Timeline for multi-section scroll animation
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#section-one", // start from section one
+      start: "top top",
+      end: "bottom bottom", // scroll across all sections
+      scrub: 1,
+    },
+  });
+
+  // Section 1 → Section 2
+  tl.to(centerImageRef.current, {
+    y: '+=100vh',
+    x: '-=30vh',   // horizontal move
+    scale: 0.3,
+    rotation: -90,
+  });
+
+  // Section 2 → Section 3
+  tl.to(centerImageRef.current, {
+    y: '+=100vh',
+    x: '+=10vh',
+    scale: 0.3,
+    rotation: 0,
+  });
+
 
     },
     { scope: sectionRef }
@@ -129,7 +178,7 @@ const PageOne = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative w-screen h-screen section snap-start"
+      className="relative w-screen min-h-screen max-h-screen h-screen section"
     >
       <Image
         width={368}
@@ -139,7 +188,7 @@ const PageOne = () => {
         className="absolute top-4 left-4 z-[99999]"
       />
       <h1 className="absolute top-20 left-4 text-white font-bold">Home</h1>
-      <div className="w-full h-full absolute top-0 ">
+      <div className="absolute top-0 left-0 w-full h-screen ">
         {rows.map((images, rowIndex) =>
           images.map((src, colIndex) => {
             // Make the center image the specific one
@@ -161,10 +210,10 @@ const PageOne = () => {
                   willChange: "transform",
                 }}
                 // className={`${isCenter?'':'hidden'}`}
-                className={`absolute ${
+                className={` ${
                   isCenter
-                    ? "center-image top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    : ""
+                    ? "absolute center-image top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    : "absolute"
                 } ${isCenter ? "" : ""}`}
               >
                 <AnimatedImage isCenter={isCenter} src={src} top={0} left={0} />

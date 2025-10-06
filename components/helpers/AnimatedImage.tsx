@@ -203,6 +203,7 @@ const AnimatedImage: React.FC<AnimatedImageProps> = ({
     });
   });
 
+
   return (
     <div
       ref={bounceRef}

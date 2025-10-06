@@ -8,7 +8,8 @@ const PageTwo= () => {
 
   return (
     <section
-      className="relative w-screen h-screen overflow-hidden grid place-items-center snap-end section"
+    id="section-two"
+      className="relative w-screen h-[100vh] overflow-hidden grid place-items-center section section-two"
     >
       
     </section>
