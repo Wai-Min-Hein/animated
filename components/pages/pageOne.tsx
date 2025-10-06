@@ -131,7 +131,7 @@ const PageOne = () => {
       // Section 1 → Section 2
       tl.to(centerImageRef.current, {
         y: "+=100vh",
-        x: "-=30vh", // horizontal move
+        x: "-=25vw", // horizontal move
         scale: 0.3,
         rotation: -90,
       });
@@ -139,7 +139,7 @@ const PageOne = () => {
       // Section 2 → Section 3
       tl.to(centerImageRef.current, {
         y: "+=100vh",
-        x: "+=10vh",
+        x: "-=5vw",
         scale: 0.3,
         rotation: 0,
       });
