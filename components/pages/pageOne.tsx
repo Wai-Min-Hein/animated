@@ -105,72 +105,44 @@ const PageOne = () => {
         ease: "power2.in",
       });
 
-      // const tl = gsap.timeline({
-      //   scrollTrigger: {
-      //     trigger: "#section-one", // start from section one
-      //     start: "top top",
-      //     end: "bottom bottom", // scroll across all sections
-      //     scrub: 1,
-      //   },
-      // });
-
-      // // Section 1 → Section 2
-      // tl.to(centerImageRef.current, {
-      //   y: "+=100vh",
-      //   x: "50%",
-      //   scale: 0.3,
-      //   rotation: -90,
-      // });
-
-      // // Section 2 → Section 3
-      // tl.to(centerImageRef.current, {
-      //   y: "+=100vh",
-      //   x: "-30%",
-      //   scale: 0.3,
-      //   rotation: 0,
-      // });
-
-
       // 1️⃣ Reset transform after Section One so GSAP can take full control
-  ScrollTrigger.create({
-    trigger: "#section-one",
-    start: "top top",
-    end: "bottom top",
-    onLeave: () => {
-      if (centerImageRef.current) {
-        // remove initial Tailwind translate
-        centerImageRef.current.style.transform = "translate(0, 0)";
-      }
-    },
-  });
+      ScrollTrigger.create({
+        trigger: "#section-one",
+        start: "top top",
+        end: "bottom top",
+        onLeave: () => {
+          if (centerImageRef.current) {
+            // remove initial Tailwind translate
+            centerImageRef.current.style.transform = "translate(0, 0)";
+          }
+        },
+      });
 
-  // 2️⃣ Timeline for multi-section scroll animation
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: "#section-one", // start from section one
-      start: "top top",
-      end: "bottom bottom", // scroll across all sections
-      scrub: 1,
-    },
-  });
+      // 2️⃣ Timeline for multi-section scroll animation
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#section-one", // start from section one
+          start: "top top",
+          end: "bottom bottom", // scroll across all sections
+          scrub: 1,
+        },
+      });
 
-  // Section 1 → Section 2
-  tl.to(centerImageRef.current, {
-    y: '+=100vh',
-    x: '-=30vh',   // horizontal move
-    scale: 0.3,
-    rotation: -90,
-  });
+      // Section 1 → Section 2
+      tl.to(centerImageRef.current, {
+        y: "+=100vh",
+        x: "-=30vh", // horizontal move
+        scale: 0.3,
+        rotation: -90,
+      });
 
-  // Section 2 → Section 3
-  tl.to(centerImageRef.current, {
-    y: '+=100vh',
-    x: '+=10vh',
-    scale: 0.3,
-    rotation: 0,
-  });
-
-
+      // Section 2 → Section 3
+      tl.to(centerImageRef.current, {
+        y: "+=100vh",
+        x: "+=10vh",
+        scale: 0.3,
+        rotation: 0,
+      });
     },
     { scope: sectionRef }
   );
