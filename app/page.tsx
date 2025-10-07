@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import PageOne from "@/components/pages/pageOne";
+import MainPage from "@/components/pages/MainPage";
 import BubbleAnimation from "@/components/BubbleAnimation";
 import { Observer } from "gsap/Observer";
 import Collection from "@/components/helpers/Collection";
@@ -54,14 +54,21 @@ const Home = () => {
   }, [activeSection]);
 
   return (
-    <main className={`relative overflow-hidden h-screen`} ref={sectionRef}>
+    <main
+    className={`relative overflow-hidden h-screen`} 
+    
+    ref={sectionRef}>
       <BubbleAnimation isRightToLeft={isSectionThreeActive} />
 
-      <PageOne activeSection={activeSection} />
+      <MainPage activeSection={activeSection} />
 
-<Collection/>
+     
+
+      <Collection />
     </main>
   );
 };
 
 export default Home;
+
+

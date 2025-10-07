@@ -17,8 +17,8 @@ const HorizontalBubbles: React.FC<HorizontalBubblesProps> = ({ size = 150, top, 
     if (!bubbleRef.current) return;
 
     const yMove = (Math.random() - 0.5) * 50; // small vertical drift
-    const duration = 3 + Math.random() * 2.5; // speed variation
-    const delay = Math.random() * 2;
+    const duration = 3 + Math.random() * 3.5; // speed variation
+    const delay = Math.random() * 1.2;
 
     // Animate horizontally across the screen
     gsap.fromTo(
@@ -40,7 +40,7 @@ const HorizontalBubbles: React.FC<HorizontalBubblesProps> = ({ size = 150, top, 
   return (
     <div
       ref={bubbleRef}
-      className="bubble absolute z-[-1]"
+      className="bubble absolute z-[100]"
       style={{ left: 0, top: `${bubbleTop}vh` }} // left:0 ensures it starts at left border
     >
       <Image src={src} width={size} height={size} alt="Horizontal Bubble" />
