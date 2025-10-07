@@ -1,45 +1,67 @@
 "use client";
-import PageOne from "@/components/pages/pageOne";
-import PageTwo from "@/components/pages/pageTwo";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import PageThree from "@/components/pages/pageThree";
 
+import PageOne from "@/components/pages/pageOne";
+import BubbleAnimation from "@/components/BubbleAnimation";
+import { Observer } from "gsap/Observer";
+import Collection from "@/components/helpers/Collection";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Observer);
+
 const Home = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [isSectionThreeActive, setIsSectionThreeActive] = useState(false);
 
-  useGSAP(() => {
-    const sections = gsap.utils.toArray<HTMLElement>(".section");
+  const [activeSection, setActiveSection] = useState(1); // 1 = sectionOne, 2 = sectionTwo, etc.
+  const animating = useRef(false);
 
-    // Snap scroll to sections
-    ScrollTrigger.create({
-      snap: {
-        snapTo: 1 / (sections.length - 1), // equally divide scroll into sections
-        duration: .5, // smooth snap
-        ease: "power1.inOut",
+  const updateSection = (newSection: number) => {
+    animating.current = true;
+    setActiveSection(newSection);
+
+    setIsSectionThreeActive(newSection == 3);
+
+    // unlock after animation duration
+    setTimeout(() => (animating.current = false), 800);
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const observer = Observer.create({
+      target: window,
+      type: "wheel,touch,pointer",
+      wheelSpeed: -1,
+      tolerance: 10,
+      preventDefault: true,
+      onUp: () => {
+        if (!animating.current) {
+          // scroll up → next section
+          updateSection(activeSection === 3 ? 1 : activeSection + 1);
+        }
+      },
+      onDown: () => {
+        if (!animating.current) {
+          // scroll down → previous section
+          updateSection(activeSection === 1 ? 3 : activeSection - 1);
+        }
       },
     });
-   
-  });
+
+    return () => observer.kill();
+  }, [activeSection]);
 
   return (
-    <main className="relative overflow-hidden" ref={sectionRef}>
-      <PageOne />
-      <PageTwo />
-      <PageThree />
+    <main className={`relative overflow-hidden h-screen`} ref={sectionRef}>
+      <BubbleAnimation isRightToLeft={isSectionThreeActive} />
 
+      <PageOne activeSection={activeSection} />
 
-      
-
-
+<Collection/>
     </main>
   );
 };
 
 export default Home;
-
-
