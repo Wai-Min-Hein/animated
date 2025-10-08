@@ -3,9 +3,8 @@
 // import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HorizontalBubbles from "../helpers/HorizontalBulbbles";
-import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,14 +12,14 @@ interface SectionProps {
   activeSection: number;
 }
 
-const SectionThree: React.FC<SectionProps> = ({ activeSection }) => {
+const SectionTwo: React.FC<SectionProps> = ({ activeSection }) => {
   const logoRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     
     // logo fade effect animation
     if (logoRef.current) {
-      if (activeSection === 3) {
+      if (activeSection === 2) {
         // fade in
         gsap.to(logoRef.current, {
           opacity: 1,
@@ -39,24 +38,24 @@ const SectionThree: React.FC<SectionProps> = ({ activeSection }) => {
       }
     }
   }, [activeSection]);
-  return (
-    <div className="relative top-0 left-0 w-full h-full flex justify-center items-center overflow-hidden">
 
-       <Image
-              ref={logoRef}
-              width={368}
-              height={72}
-              src="/logo.svg"
-              alt="Logo"
-              className="absolute top-4 left-4 z-[99999]"
-            />
-        <>
-          {Array.from({ length: 10 }).map((_, i) => {
-            return <HorizontalBubbles key={i} activeSection={activeSection}/>;
-          })}
-        </>
+  return (
+    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center overflow-hidden">
+      <div className="relative w-full h-full grid place-items-center">
+        <div className="relative w-[80vw] h-full grid place-items-center">
+          <Image
+            ref={logoRef}
+            fill
+            src="/logo.svg"
+            alt="Logo"
+            className={`z-[999] opacity-0  translate-y-[-10vh] ${
+              activeSection == 2 ? "" : ""
+            }`}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default SectionThree;
+export default SectionTwo;

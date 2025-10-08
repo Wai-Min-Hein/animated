@@ -39,13 +39,13 @@ const Home = () => {
       onUp: () => {
         if (!animating.current) {
           // scroll up → next section
-          updateSection(activeSection === 3 ? 1 : activeSection + 1);
+          updateSection(activeSection === 3 ? 3 : activeSection + 1);
         }
       },
       onDown: () => {
         if (!animating.current) {
           // scroll down → previous section
-          updateSection(activeSection === 1 ? 3 : activeSection - 1);
+          updateSection(activeSection === 1 ? 1 : activeSection - 1);
         }
       },
     });

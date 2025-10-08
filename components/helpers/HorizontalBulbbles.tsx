@@ -8,32 +8,56 @@ interface HorizontalBubblesProps {
   size?: number;
   top?: number;
   src?: string;
+  activeSection: number;
 }
 
-const HorizontalBubbles: React.FC<HorizontalBubblesProps> = ({ size = 150, top, src = "/collection.svg" }) => {
+const HorizontalBubbles: React.FC<HorizontalBubblesProps> = ({
+  size = 150,
+  top,
+  src = "/collection.svg",
+  activeSection,
+}) => {
   const bubbleRef = useRef<HTMLDivElement>(null);
+  const animRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     if (!bubbleRef.current) return;
 
-    const yMove = (Math.random() - 0.5) * 50; // small vertical drift
-    const duration = 3 + Math.random() * 3.5; // speed variation
+    const yMove = (Math.random() - 0.5) * 50;
+    const duration = 3 + Math.random() * 3.5;
     const delay = Math.random() * 1.2;
 
-    // Animate horizontally across the screen
-    gsap.fromTo(
-      bubbleRef.current,
-      { x: '100vw', y: `+=${yMove}` }, // start at left border
-      {
-        x: `-100vw`, // move to right edge
-        y: `+=${yMove}`,
-        duration,
-        delay,
-        ease: "linear",
-        repeat: -1,
-      }
-    );
-  }, [size]);
+    // Only create the moving animation once
+    if (!animRef.current) {
+      animRef.current = gsap.fromTo(
+        bubbleRef.current,
+        { x: "100vw", y: `+=${yMove}` },
+        {
+          x: `-100vw`,
+          y: `+=${yMove}`,
+          duration,
+          delay,
+          ease: "linear",
+          repeat: -1,
+        }
+      );
+    }
+
+    // Handle fade in/out based on section
+    if (activeSection === 3) {
+      gsap.to(bubbleRef.current, {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+      });
+    } else {
+      gsap.to(bubbleRef.current, {
+        opacity: 0,
+        duration: .5,
+        ease: "power2.in",
+      });
+    }
+  }, [activeSection]);
 
   const bubbleTop = top ?? Math.random() * 80;
 
@@ -41,7 +65,7 @@ const HorizontalBubbles: React.FC<HorizontalBubblesProps> = ({ size = 150, top, 
     <div
       ref={bubbleRef}
       className="bubble absolute z-[100]"
-      style={{ left: 0, top: `${bubbleTop}vh` }} // left:0 ensures it starts at left border
+      style={{ left: 0, top: `${bubbleTop}vh`, opacity: 0 }}
     >
       <Image src={src} width={size} height={size} alt="Horizontal Bubble" />
     </div>
